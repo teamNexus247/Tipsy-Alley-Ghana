@@ -16,14 +16,12 @@
 .U-text{
   color: #f6020b;
 }
-
-
 #about-us-what {
   text-align: center;
   padding: 50px 0 50px 0;
   color: #fff;
-  background: url('/src/Images/bobablue.png') no-repeat center center/cover;
-  max-width: 2000px; /* Limit the width to ensure it doesn't stretch too wide */
+  background: url('/src/Images/bob.png') no-repeat center center/cover;
+  max-width: 2000px;
   margin: 0 auto;
 }
 
