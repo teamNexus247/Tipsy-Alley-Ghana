@@ -14,27 +14,21 @@ import mockn from '../Images/mocknon.png';
 import reviewImage from '../Images/profile.jpeg';
 
 const images = [bablue, bobablu, bobabl, bobab];
-
-
 const Home = () => {
   useEffect(() => {
     const homepage = document.getElementById('homepage');
     let currentImageIndex = 0;
-
-    // Set the initial background image immediately
+    
     homepage.style.backgroundImage = `url(${images[currentImageIndex]})`;
-
     const changeBackgroundImage = () => {
       currentImageIndex = (currentImageIndex + 1) % images.length;
       homepage.style.backgroundImage = `url(${images[currentImageIndex]})`;
       homepage.classList.add('slide-in');
-
       setTimeout(() => {
         homepage.classList.remove('slide-in');
-      }, 2000); // Duration of the slide-in animation
+      }, 2000);
     };
-
-    const intervalId = setInterval(changeBackgroundImage, 4000); // Change image every 4 seconds
+    const intervalId = setInterval(changeBackgroundImage, 4000);
 
     return () => clearInterval(intervalId);
   }, []);
