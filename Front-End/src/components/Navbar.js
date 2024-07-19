@@ -28,7 +28,7 @@ const Navbar = () => {
           <div className="logo-container">
             <Link to="/home" className="logo-link" onClick={handleLinkClick}>
               <img src={logo} alt="Logo" className="logo" />
-              <span className="logo-text">Tipsy Alley GH</span>
+              <span className="logo-text">Always A Happy Hour</span>
             </Link>
             <button className={`menu-button ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
               {menuOpen ? <span>&times;</span> : <span>&#9776;</span>}
@@ -44,9 +44,9 @@ const Navbar = () => {
                   <Link to="/products" className={location.pathname.startsWith("/products") ? 'active' : ''}>Products<span className="dropdown-arrow">&#9662;</span></Link>
                   {dropdownOpen && (
                     <ul className="dropdown-menu">
-                      <li><Link to="/products/cocktails" onClick={handleLinkClick}>Cocktails</Link></li>
-                      <li><Link to="/products/boba" onClick={handleLinkClick}>Boba</Link></li>
-                      <li><Link to="/products/mocktails" onClick={handleLinkClick}>Mocktails</Link></li>
+                      <li><Link to="./cocktails" onClick={handleLinkClick}>Cocktails</Link></li>
+                      <li><Link to="./boba" onClick={handleLinkClick}>Boba</Link></li>
+                      <li><Link to="./mocktails" onClick={handleLinkClick}>Mocktails</Link></li>
                     </ul>
                   )}
                 </div>

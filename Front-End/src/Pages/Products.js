@@ -37,14 +37,14 @@ function Products() {
 
   return (
     <div className="product-main">
-      <div className="homepage">
+      <div className="homepage" id='products'>
       <div className="content">
         <h1 className="title">Discover Our <br />Unique Products.</h1>
         <p className="description">
           Lorem ipsum dolor sit amet, consectetur <br />adipiscing elit, sed do eiusmod tempor incididunt<br /> 
           ut labore et dolore magna aliqua. <br />Ut enim ad minim veniam.
         </p>
-        <button className="cta-button">Know More</button>
+        <button id='cta-button' className="cta-button"><a href="./booking">Get Some</a></button>
       </div>
     </div>
 

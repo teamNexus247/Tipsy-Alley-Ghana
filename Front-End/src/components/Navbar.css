@@ -1,5 +1,5 @@
 .navbar {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  background-color: #3083ff;
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -36,6 +36,17 @@
 
 .logo-text {
   display: inline-block;
+  font-size: 15px;
+}
+.logo-text:hover {
+  display: inline-block;
+  font-size: 15px;
+  color: #e91e63;
+}
+.logo-text:active {
+  display: inline-block;
+  font-size: 15px;
+  color: #e20000;
 }
 
 .menu-button {

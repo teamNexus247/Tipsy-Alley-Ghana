@@ -259,3 +259,141 @@
 // };
 
 // export default Admin;
+
+// background: linear-gradient(to right, #6a11cb, #2575fc);
+
+{/* <section className="about-us-team">
+            <div className="container">
+              <h2>Have You Enjoyed Any of These?</h2>
+              <div className="team-members">
+                <div className="team-member">
+                  <div className="team-member-img-container">
+                    <img src={team1} alt="John Doe" />
+                  </div>
+                  <h3>Boba</h3>
+                  <p>Brown</p>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius optio commodi aperiam,
+                    quaerat placeat, hic tempora omnis odio unde sed nihil quisquam laudantium modi corrupti
+                    minus dolor.
+                  </p>
+                </div>
+                <div className="team-member">
+                  <div className="team-member-img-container">
+                    <img src={team2} alt="Jane Smith" />
+                  </div>
+                  <h3>Cocktail</h3>
+                  <p>Brown</p>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius optio commodi aperiam,
+                    quaerat placeat, hic tempora omnis odio unde sed nihil quisquam laudantium modi corrupti
+                    minus dolor.
+                  </p>
+                </div>
+                <div className="team-member">
+                  <div className="team-member-img-container">
+                    <img src={team3} alt="Mike Johnson" />
+                  </div>
+                  <h3>Moctail</h3>
+                  <p>Blue</p>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius optio commodi aperiam,
+                    quaerat placeat, hic tempora omnis odio unde sed nihil quisquam laudantium modi corrupti
+                    minus dolor.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section> */}
+
+
+
+        //   .about-us-team {
+        //     background: #64a2ff;
+        //     color: white;
+        //     padding: 50px 0;
+        //     text-align: center;
+        //   }
+          
+        //   .about-us-team h2 {
+        //     font-size: 2em;
+        //     margin-bottom: 40px;
+        //   }
+          
+        //   .team-members {
+        //     display: flex;
+        //     justify-content: center;
+        //     flex-wrap: nowrap;
+        //     gap: 20px;
+        //   }
+          
+        //   .team-member {
+        //     background-color: #3083ff;
+        //     border-radius: 5px;
+        //     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        //     transition: transform 0.3s ease, box-shadow 0.3s ease;
+        //     width: 350px;
+        //     text-align: center;
+        //     overflow: hidden;
+        //   }
+          
+        //   .team-member:hover {
+        //     transform: translateY(-10px);
+        //     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        //   }
+          
+        //   .team-member-img-container {
+        //     width: 100%;
+        //     height: 0;
+        //     padding-top: 100%;
+        //     position: relative;
+        //     overflow: hidden;
+        //   }
+          
+        //   .team-member-img-container img {
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        //     width: 100%;
+        //     height: 100%;
+        //     object-fit: cover;
+        //     transition: transform 0.3s ease;
+        //   }
+          
+        //   .team-member:hover .team-member-img-container img {
+        //     transform: scale(1.1);
+        //   }
+          
+        //   .team-member h3 {
+        //     margin: 15px 0 5px;
+        //     font-size: 1.5em;
+        //     color: #e91e63;
+        //   }
+          
+        //   .team-member p {
+        //     text-align: left;
+        //     margin: 0 15px 15px;
+        //     font-size: 1em;
+        //     color: #fff;
+        //   }
+
+
+        
+//   .image, .content {
+//     width: 100%;
+//     margin: 0 0 30px;
+//   }
+
+
+//   .image, .content {
+//     width: 100%;
+//     margin: 0 0 30px;
+//   }
+  
+//   .team-members {
+//     display: flex;
+//     justify-content: center;
+//     flex-wrap: wrap;
+//     gap: 2px;
+//   }
+

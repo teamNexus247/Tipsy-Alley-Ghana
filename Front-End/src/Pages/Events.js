@@ -29,7 +29,7 @@ const Events = () => {
 
   return (
     <div className="events-container">
-      <div className="homepage">
+      <div className="homepage" id='events'>
       <div className="content">
         <h1 className="title">Tipsy <br/>Makes Every <br/>Event Special.</h1>
         <p className="description">

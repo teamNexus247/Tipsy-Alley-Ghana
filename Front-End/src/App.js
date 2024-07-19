@@ -34,9 +34,9 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/products/boba" element={<Boba />} /> 
-        <Route path="/products/mocktails" element={<Mocktails />} /> 
-        <Route path="/products/cocktails" element={<Cocktails />} />
+        <Route path="/boba" element={<Boba />} /> 
+        <Route path="/mocktails" element={<Mocktails />} /> 
+        <Route path="/cocktails" element={<Cocktails />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/admin" element={isAuth ? <Admin setAuth={setIsAuth} /> : <Navigate to="/login" />} />
         <Route path="/login" element={<Login setAuth={setIsAuth} />} />
