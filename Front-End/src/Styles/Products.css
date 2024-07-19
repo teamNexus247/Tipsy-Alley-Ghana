@@ -4,7 +4,6 @@ body {
   box-sizing: border-box;
 }
 
-
 .product-main {
   padding-bottom: 10px;
   text-align: center;
@@ -166,7 +165,6 @@ body {
   text-align: left;
   margin-top: 10px;
 }
-
 
 @keyframes slide-in {
   from {
