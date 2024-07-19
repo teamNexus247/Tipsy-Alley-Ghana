@@ -253,7 +253,6 @@ a:hover{
   background-color: #0056b3;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .section3 .grid-item {
     flex: 1 1 calc(50% - 40px);
@@ -347,7 +346,6 @@ a:hover{
   margin-top: 10px;
 }
 
-
 @media (max-width: 768px) {
   .content .title {
     font-size: 8vw;
@@ -409,19 +407,17 @@ a:hover{
 
 @media (max-width: 480px) {
   .content .title {
-    font-size: 24vw;
+    font-size: 15vw;
   }
 
   .content .description {
-    font-size: 5vw;
+    font-size: 4vw;
   }
 
   .content .cta-button {
     font-size: 4vw;
   }
-  
 }
-
 
 @media (max-width: 480px) {
   .text-container h1 {
@@ -436,7 +432,6 @@ a:hover{
     font-size: 12px;
   }
 }
-
 
 @media (max-width: 480px) {
   .section3 .header h1 {
