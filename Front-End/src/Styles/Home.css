@@ -12,6 +12,7 @@ body {
   background-size: cover;
   background-position: center;
   padding: 25px;
+  background-attachment: fixed;
 }
 
 #homepage {
