@@ -23,7 +23,7 @@ function Cocktails() {
     } else {
       setVisibleProducts(products.length);
     }
-  }, [windowWidth]);
+  },);
 
   const showMoreProducts = () => {
     setVisibleProducts(prev => prev + 3);
@@ -94,7 +94,7 @@ function Cocktails() {
                   <div className='review-content'>
                     <div className='review1'>
                       <img src={team2} alt="Drinks" className='review-image'/>
-                      <h3>Samue Blewusi</h3>
+                      <h3>Sam John</h3>
                       <p>Top, Ben Co</p>
                     </div>
                     <div className='review2'>

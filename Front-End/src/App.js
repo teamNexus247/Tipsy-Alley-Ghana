@@ -10,9 +10,9 @@ import Products from './Pages/Products';
 import Booking from './Pages/Booking';
 import Admin from './Pages/Admin';
 import Login from './components/Login';
-import Boba from './Pages/Boba'; // Make sure Boba is imported
-import Mocktails from './Pages/Moctails'; // Make sure Boba is imported
-import Cocktails from './Pages/Cocktails'; // Make sure Boba is imported
+import Boba from './Pages/Boba';
+import Mocktails from './Pages/Moctails';
+import Cocktails from './Pages/Cocktails'; 
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);

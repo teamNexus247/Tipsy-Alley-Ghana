@@ -35,6 +35,7 @@ const Admin = ({ setAuth }) => {
         </div>
         <button className="logout-button" onClick={handleLogout}>Log Out</button>
       </header>
+      
       <main className="admin-main">
         <h1>Manage your inventory effortlessly.</h1>
         <p>Easily add, delete, and organize your products. Boost efficiency with our user-friendly interface.</p>
@@ -43,6 +44,7 @@ const Admin = ({ setAuth }) => {
           <img src={team2} alt="Drinks" />
         </div>
       </main>
+
       <section className="bookings">
         <h2>Bookings</h2>
         <table>
@@ -80,6 +82,7 @@ const Admin = ({ setAuth }) => {
           </tbody>
         </table>
       </section>
+
       <section className='add-products'>
         <h2>Add Products</h2>
         <div className='form-row'>
@@ -96,6 +99,7 @@ const Admin = ({ setAuth }) => {
         </div>
         <button className='add-products-button'>Add Products</button>
       </section>
+
       <section className='delete-products-section'>
         <h2>Remove/Delete Products</h2>
         <div className='delete-products-form-row'>
@@ -124,6 +128,7 @@ const Admin = ({ setAuth }) => {
           <a href="#">User Permissions</a>
         </div>
       </section>
+
     </div>
   );
 };
