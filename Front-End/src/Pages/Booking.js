@@ -1,7 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import '../Styles/Booking.css';
-import headerImage from '../Images/bobablue.png';
-
 const Booking = () => {
     const formRef = useRef(null);
 
@@ -10,6 +8,42 @@ const Booking = () => {
             formRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
+
+    useEffect(() => {
+                    const handleSubmit = (event) => {
+                        event.preventDefault();
+
+                        const formData = new FormData(event.target);
+                        const data = {};
+                        formData.forEach((value, key) => {
+                            data[key] = value;
+                        });
+
+                        fetch('https://backend-fegmid3olq-ww.a.run.app/api/bookings', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                alert('Booking successful!');
+                                event.target.reset();
+                            })
+                            .catch(error => {
+                                console.error('Error booking event:', error);
+                                alert('Booking failed. Please try again.');
+                            });
+                    };
+
+                    const form = document.getElementById('bookingForm');
+                    form.addEventListener('submit', handleSubmit);
+
+                    return () => {
+                        form.removeEventListener('submit', handleSubmit);
+                    };
+    }, []);
 
     return (
         <div className='main-book'>
@@ -25,34 +59,34 @@ const Booking = () => {
             </div>
 
             <div className="booking-container" ref={formRef}>
-                <form className="booking-form">
+                <form className="booking-form" id="bookingForm">
                     <div>
                         <label>Your Name</label>
-                        <input type="text" placeholder='Enter full name'/>
+                        <input type="text" id= "customerName" name= "customerName" placeholder='Enter full name'/>
                     </div>
                     <div>
                         <label>Your Phone Number</label>
-                        <input type="text" placeholder='Input phone number'/>
+                        <input type="text" id= "customercontact"  placeholder='Input phone number'/>
                     </div>
                     <div>
                     <div>
                         <label>Email Address (Optional)</label>
-                        <input type="email" placeholder='Enter Email'/>
+                        <input type="email"  id= "email" name= "email" placeholder='Enter Email'/>
                     </div>
                     <div>
                         <label>Event Location</label>
-                        <input type='text' placeholder='Enter specific Location'></input>
+                        <input type='text' id= "eventLocation" name= "eventLocation" placeholder='Enter specific Location'></input>
                     </div>
                         <label>Event Date (dd/mm/yy)</label>
-                        <input type="date"/>
+                        <input type="date" id= "eventDate" name= "eventDate" />
                     </div>
                     <div>
                         <label>Event Time</label>
-                        <input type="time" />
+                        <input type="time"  id= "eventTime" name= "eventTime" />
                     </div>
                     <div>
                         <label>Event Details</label>
-                        <textarea rows="4" placeholder='Add more information about the event'></textarea>
+                        <textarea rows="4" id= "eventDetails" name= "eventDetails" placeholder='Add more information about the event'></textarea>
                     </div>
                     <button type="submit">Book Us</button>
                 </form>
