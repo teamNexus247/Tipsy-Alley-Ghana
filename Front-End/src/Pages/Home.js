@@ -14,11 +14,12 @@ import mockn from '../Images/mocknon.png';
 import reviewImage from '../Images/profile.jpeg';
 
 const images = [bablue, bobablu, bobabl, bobab];
+
 const Home = () => {
   useEffect(() => {
     const homepage = document.getElementById('homepage');
     let currentImageIndex = 0;
-    
+
     homepage.style.backgroundImage = `url(${images[currentImageIndex]})`;
     const changeBackgroundImage = () => {
       currentImageIndex = (currentImageIndex + 1) % images.length;
@@ -26,9 +27,9 @@ const Home = () => {
       homepage.classList.add('slide-in');
       setTimeout(() => {
         homepage.classList.remove('slide-in');
-      }, 2000);
+      }, 3000); 
     };
-    const intervalId = setInterval(changeBackgroundImage, 4000);
+    const intervalId = setInterval(changeBackgroundImage, 4000); 
 
     return () => clearInterval(intervalId);
   }, []);
@@ -42,12 +43,10 @@ const Home = () => {
             Lorem ipsum dolor sit amet, consectetur <br />adipiscing elit, sed do eiusmod tempor incididunt<br /> 
             ut labore et dolore magna aliqua. <br />Ut enim ad minim veniam.
           </p>
-          <button id="cta-button" className="cta-button">
-            <a href="./products">Explore</a>
-          </button>
+          <button id="cta-button" className="cta-button"><a href="./products">Explore</a></button>
         </div>
       </div>
-      <div className="section2">
+      <div className="section2" id="section2">
         <div className="image-container">
           <img src={image} alt="Drinks" />
         </div>
@@ -60,7 +59,7 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <div className="section3">
+      <div className="section3" id="section3">
         <div className="header">
           <h2>Tipsy of Joy</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
@@ -107,7 +106,7 @@ const Home = () => {
           <a href="./products">More Products</a>
         </button>
       </div>
-      <div className="section4">
+      <div className="section4" id="section4">
         <div className="header">
           <h2>Reviews</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>

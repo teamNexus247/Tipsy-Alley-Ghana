@@ -12,11 +12,11 @@ body {
   background-size: cover;
   background-position: center;
   padding: 25px;
-  background-attachment: fixed;
 }
 
 #homepage {
   transition: background-image 1s ease-in-out;
+  background-attachment: fixed;
 }
 
 .fade-in {
@@ -253,41 +253,6 @@ a:hover{
   background-color: #0056b3;
 }
 
-@media (max-width: 1024px) {
-  .section3 .grid-item {
-    flex: 1 1 calc(50% - 40px);
-    max-width: calc(50% - 40px);
-  }
-
-  .section3 .grid-item .circle {
-    width: 200px;
-    height: 200px;
-  }
-}
-
-@media (max-width: 768px) {
-  .section3 .grid-item {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
-  }
-
-  .section3 .grid-item .circle {
-    width: 150px;
-    height: 150px;
-  }
-}
-
-@media (max-width: 480px) {
-  .section3 .grid-item {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-
-  .section3 .grid-item .circle {
-    width: 120px;
-    height: 120px;
-  }
-}
 .section4 {
   text-align: center;
   background-color: #fff;
@@ -345,6 +310,53 @@ a:hover{
   color: #ffc107;
   margin-top: 10px;
 }
+@media (max-width: 1024px) {
+  .section3 .grid-item {
+    flex: 1 1 calc(50% - 40px);
+    max-width: calc(50% - 40px);
+  }
+
+  .section3 .grid-item .circle {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section3 .grid-item {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+
+  .content ,.description{
+    font-size: 3vw;
+  }
+
+  .section3 .grid-item .circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .homepage{
+    padding-top: 20%;
+  }
+  
+}
+
+@media (max-width: 480px) {
+  
+
+  .section3 .grid-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .section3 .grid-item .circle {
+    width: 120px;
+    height: 120px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .content .title {
@@ -352,7 +364,7 @@ a:hover{
   }
 
   .content .description {
-    font-size: 4vw;
+    font-size: 3vw;
   }
 
   .content .cta-button {
@@ -409,7 +421,6 @@ a:hover{
   .content .title {
     font-size: 15vw;
   }
-
   .homepage{
     padding-left: 1px;
   }
