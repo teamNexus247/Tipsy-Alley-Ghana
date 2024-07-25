@@ -8,7 +8,7 @@ import Events from './Pages/Events';
 import About from './Pages/About';
 import Products from './Pages/Products';
 import Booking from './Pages/Booking';
-import Admin from './Pages/Admin';
+import Admin from './components/Admin';
 import Login from './components/Login';
 import Boba from './Pages/Boba';
 import Mocktails from './Pages/Moctails';

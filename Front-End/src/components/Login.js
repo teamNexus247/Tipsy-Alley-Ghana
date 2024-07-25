@@ -56,6 +56,7 @@ const Login = ({ setAuth }) => {
         <button type="submit">LOG IN</button>
       </form>
     </div>
+    
   );
 };
 

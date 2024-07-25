@@ -1,0 +1,195 @@
+#admin-main-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  #admin-sidebar {
+    width: 200px;
+    background-color: #3083ff;
+    padding: 20px;
+    display: flex;
+    color: #fff;
+    flex-direction: column;
+  }
+  
+  #admin-sidebar-logo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .admin-sidebar-item {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  #admin-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+.dashboard-overview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .dashboard-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+  }
+  
+  .active-projects {
+    margin-top: 20px;
+  }
+  
+  .active-projects table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .active-projects th, .active-projects td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .team-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }  
+
+  #admin-dashboard-section, #admin-bookings-section, #admin-products-section {
+    display: none;
+  }
+  
+  #admin-dashboard-section h2, #admin-bookings-section h2, #admin-products-section h2 {
+    margin-bottom: 20px;
+  }
+  
+  #admin-bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #admin-bookings-table th, #admin-bookings-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #admin-bookings-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .admin-product-card {
+    display: flex;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .admin-product-image {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+  }
+  
+  .admin-product-details {
+    flex: 1;
+  }
+  
+  .admin-edit-button, .admin-delete-button, .admin-save-button {
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  #admin-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #admin-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+  }
+  
+  #admin-modal-content label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  #admin-dashboard-section {
+    display: block;
+  }
+  
+  #admin-bookings-section {
+    display: block;
+  }
+  
+  #admin-products-section {
+    display: block;
+  }
+  
+  
+@media (max-width: 1200px) {
+    #admin-sidebar {
+      width: 150px;
+    }
+    
+    .admin-product-card {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .admin-product-image {
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #admin-main-container {
+      flex-direction: column;
+    }
+    
+    #admin-sidebar {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    
+    #admin-content {
+      padding: 10px;
+    }
+
+    .dashboard-overview {
+        flex-direction: column;
+      }
+      
+      .dashboard-card {
+        margin-bottom: 20px;
+      }
+      
+      .active-projects table, .active-projects th, .active-projects td {
+        font-size: 14px;
+      }
+  }
