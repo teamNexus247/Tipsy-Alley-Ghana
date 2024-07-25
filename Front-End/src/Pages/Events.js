@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import '../Styles/Events.css';
-import eventImage1 from '../Images/bobablue1.png';
+import eventImage1 from '../Images/bobablue.png';
 import eventImage2 from '../Images/bob1.png';
 import eventImage3 from '../Images/boba.png';
 import eventImage4 from '../Images/Nonalcohol.png';
