@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './Admin.css';
-import productImage from '../Images/bo4.png'; // assuming all products use the same image
+import productImage from '../Images/bob1.png';
 
 const Admin = () => {
   const [selectedSection, setSelectedSection] = useState('dashboard');
   const [products, setProducts] = useState([
     { id: 1, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.' },
     { id: 2, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.' },
-    // Add more products as needed
   ]);
   const [editingProduct, setEditingProduct] = useState(null);
 
