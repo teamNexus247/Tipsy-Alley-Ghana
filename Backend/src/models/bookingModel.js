@@ -5,7 +5,7 @@ const bookingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  contact: {
+  contact1: {
     type: String,
     required: true,
   },
@@ -13,14 +13,6 @@ const bookingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  products: [
-    {
-      category: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
   eventDate: {
     type: Date,
     required: true,

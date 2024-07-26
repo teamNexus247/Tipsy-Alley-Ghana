@@ -1,9 +1,10 @@
 const Booking = require('../models/bookingModel');
 const notificationapi = require('notificationapi-node-server-sdk').default;
 
+// Initialize notification API
 notificationapi.init(
-  '13sm5rdfot3p1a5rjoin6k6k18', 
-  '17thhodgobn8rd3s1grg90k6pvp7pd9sttncj90pl87d33st4o6b' // clientSecret
+  'oiamlkyvifzw3ternnibp7pe06', 
+  '748ng4h843wpc8druxk5dzf72fy7cl2rq4rog49vj0fnl1jeholukqua0z'
 );
 
 const createBooking = async (req, res) => {
@@ -12,19 +13,19 @@ const createBooking = async (req, res) => {
 
     const sendBookingNotification = (booking) => {
       notificationapi.send({
-        notificationId: 'tipsy_alley',
+        notificationId: 'new_bookings',
         user: {
-          id: 'samuelgyasifordjour@gmail.com',
-          email: 'samuelgyasifordjour@gmail.com',
-          number: '+233248425044' 
+          id: "tipsyalleygh@gmail.com",
+          email: "tipsyalleygh@gmail.com",
+          number: "+233248425044" 
         },
         mergeTags: {
           "booking": {
             "customerName": booking.customerName,
-            "contact": booking.contact,
+            "contact1": booking.contact1,
             "eventDate": booking.eventDate,
-            "eventLocation": booking.eventLocation,
-            "customerEmail": booking.customerEmail
+            "eventTime": booking.eventTime,
+            "eventLocation": booking.eventLocation
           }
         }
       });

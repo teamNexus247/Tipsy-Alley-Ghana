@@ -11,7 +11,7 @@ const {
 // Route to get all bookings and create a new booking
 router.route('/').get(getBookings).post(createBooking);
 
-// Route to get, update, and delete a booking by ID
+// Route to get, update, and delete a booking 
 router.route('/:id').get(getBookingById).put(updateBooking).delete(deleteBooking);
 
 module.exports = router;

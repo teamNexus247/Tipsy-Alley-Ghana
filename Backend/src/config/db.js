@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const connectDB = async () => {
 
-mongoose.connect('mongodb+srv://Kay:l1Eu0mBQKIAH8tRr@cluster0.toggvcw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://tipsyalleygh:oqA3Lg5ZWUbxi4At@tipsyalleygh.ddf6jwm.mongodb.net/TipsyAlleyDB?retryWrites=true&w=majority&appName=TipsyAlleyGh', {
    
 })
 .then(() => console.log('Tipsy Alley MongoDB Connected'))
