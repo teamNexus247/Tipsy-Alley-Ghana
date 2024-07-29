@@ -96,9 +96,30 @@ body, html {
   
   .right form h2 {
     margin-bottom: 20px;
+    margin-left: 30%;
     font-size: 2rem;
+    font-weight: 700;
+    color: #3083ff;
+    letter-spacing: -1px;
   }
   
+.right form label{
+  font-size: 20px;
+  color: #000000;
+  font-weight: 500;
+}
+
+ .right form input,
+ .right form textarea {
+  border: none;
+  background-color: #f0f0f0;
+ }
+ .right form input,
+ .right form textarea:focus {
+  border: white;
+  background-color: #f0f0f0;
+ }
+
   .cu-field {
     margin-bottom: 10px;
     padding: 10px;
@@ -106,11 +127,11 @@ body, html {
     border-radius: 5px;
     font-size: 1rem;
   }
-  
-  .cu-field:focus {
-    border-color: #ff7f50;
-  }
-  
+
+ #non-resizable-textarea{
+  resize: none;
+ }
+
   .btn {
     background-color: #3083ff;
     color: white;
@@ -123,6 +144,7 @@ body, html {
   }
   
   .btn:hover {
+    padding-top: 10px;
     background-color: #005be4;
     color: #fff;
   }

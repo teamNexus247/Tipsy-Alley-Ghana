@@ -1,22 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './Admin.css';
-import productImage from '../Images/bob1.png';
+import defaultProductImage from '../Images/bo4.png';
 
 const Admin = () => {
   const [selectedSection, setSelectedSection] = useState('dashboard');
   const [products, setProducts] = useState([
-    { id: 1, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.' },
-    { id: 2, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.' },
+    { id: 1, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.', productImage: defaultProductImage },
+    { id: 2, name: 'Strawberry Boba', category: 'Mocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.', productImage: defaultProductImage }
   ]);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+  const fileInputRef = useRef(null);
+
+  const handleCloseModal = () => {
+    setEditingProduct(null);
+  };
 
   const handleEditProduct = (product) => {
     setEditingProduct(product);
   };
 
   const handleSaveProduct = () => {
+    setProducts(products.map(product => product.id === editingProduct.id ? editingProduct : product));
     setEditingProduct(null);
   };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditingProduct({ ...editingProduct, productImage: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpdateImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterCategory(e.target.value);
+  };
+
+  const filteredProducts = products.filter(product => {
+    return (
+      (filterCategory === '' || product.category === filterCategory) &&
+      (searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  });
 
   return (
     <div id="admin-main-container">
@@ -32,18 +70,18 @@ const Admin = () => {
             <h2>Dashboard</h2>
             <div className="dashboard-overview">
               <div className="dashboard-card">
-                <h3>Projects</h3>
+                <h3>Monthly Orders</h3>
                 <p>18</p>
                 <small>2 Completed</small>
               </div>
               <div className="dashboard-card">
-                <h3>Active Tasks</h3>
-                <p>132</p>
+                <h3>Active Orders</h3>
+                <p>15</p>
                 <small>28 Completed</small>
               </div>
               <div className="dashboard-card">
-                <h3>Teams</h3>
-                <p>12</p>
+                <h3>Weekly Orders</h3>
+                <p>4</p>
                 <small>1 Completed</small>
               </div>
               <div className="dashboard-card">
@@ -53,27 +91,53 @@ const Admin = () => {
               </div>
             </div>
             <div className="active-projects">
-              <h3>Active Projects</h3>
+              <h3>Active Orders</h3>
               <table>
                 <thead>
                   <tr>
-                    <th>Project Name</th>
+                    <th>Occation Name</th>
                     <th>Hours</th>
                     <th>Priority</th>
-                    <th>Members</th>
-                    <th>Progress</th>
+                    <th>Sample Image</th>
+                    <th>Performance</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Add your project rows here */}
                   <tr>
-                    <td>Dropbox Design System</td>
-                    <td>34</td>
+                    <td>Birthday Celebration</td>
+                    <td>6</td>
                     <td>Medium</td>
-                    <td><img src={productImage} alt="team" className="team-avatar" /></td>
-                    <td>15%</td>
+                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td>89%</td>
                   </tr>
-                  {/* Add more rows as needed */}
+                  <tr>
+                    <td>Birthday Celebration</td>
+                    <td>6</td>
+                    <td>Medium</td>
+                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td>89%</td>
+                  </tr>
+                  <tr>
+                    <td>Birthday Celebration</td>
+                    <td>6</td>
+                    <td>Medium</td>
+                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td>89%</td>
+                  </tr>
+                  <tr>
+                    <td>Birthday Celebration</td>
+                    <td>6</td>
+                    <td>Medium</td>
+                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td>89%</td>
+                  </tr>
+                  <tr>
+                    <td>Birthday Celebration</td>
+                    <td>6</td>
+                    <td>Medium</td>
+                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td>89%</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -116,7 +180,6 @@ const Admin = () => {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -124,10 +187,19 @@ const Admin = () => {
         )}
         {selectedSection === 'previewProducts' && (
           <div id="admin-products-section">
-            <h2>Preview Products</h2>
-            {products.map(product => (
+            <div className='filter-and-search'>
+              <select id="filtering" name='filterProduct' type="select" value={filterCategory} onChange={handleFilterChange}>
+                <option value="">Filter</option>
+                <option value="">All</option>
+                <option value="Cocktail">Cocktail</option>
+                <option value="Mocktail">Mocktail</option>
+                <option value="Boba">Boba</option>
+              </select>
+              <input type='search' name='search' id='search' placeholder="Search" value={searchTerm} onChange={handleSearchChange}></input>
+            </div>
+            {filteredProducts.map(product => (
               <div className="admin-product-card" key={product.id}>
-                <img src={productImage} alt={product.name} className="admin-product-image" />
+                <img src={product.productImage} alt={product.name} className="admin-product-image" />
                 <div className="admin-product-details">
                   <h3>{product.name}</h3>
                   <p>Category: {product.category}</p>
@@ -146,24 +218,64 @@ const Admin = () => {
       {editingProduct && (
         <div id="admin-modal">
           <div id="admin-modal-content">
-            <h2>Edit Product</h2>
-            <label>
-              Product Name:
-              <input type="text" value={editingProduct.name} onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })} />
-            </label>
-            <label>
-              Category:
-              <input type="text" value={editingProduct.category} onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })} />
-            </label>
-            <label>
-              Price:
-              <input type="number" value={editingProduct.price} onChange={(e) => setEditingProduct({ ...editingProduct, price: e.target.value })} />
-            </label>
-            <label>
-              Description:
-              <textarea value={editingProduct.description} onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })} />
-            </label>
-            <button onClick={handleSaveProduct} className="admin-save-button">Save Changes</button>
+            <div className="modal-header">
+              <h2>Edit Product</h2>
+              <button className="closing-button" onClick={handleCloseModal}>×</button>
+            </div>
+            <div className="edit-product-container">
+              <div className="image-container">
+                <img src={editingProduct.productImage} alt={editingProduct.name} className="edit-product-image" />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                />
+                <button onClick={handleUpdateImageClick} className="update-image-button">Update Image</button>
+              </div>
+              <div className="edit-product-details">
+                <div className="edit-product-field">
+                  <label>Product name:</label>
+                  <input
+                    type="text"
+                    value={editingProduct.name}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
+                  />
+                </div>
+                <div className="edit-product-field">
+                  <label>Category:</label>
+                  <select
+                    value={editingProduct.category}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                  >
+                    <option value="Cocktail">Cocktail</option>
+                    <option value="Mocktail">Mocktail</option>
+                    <option value="Boba">Boba</option>
+                  </select>
+                </div>
+                <div className="edit-product-field">
+                  <label>Price:</label>
+                  <input
+                    type="number"
+                    value={editingProduct.price}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, price: e.target.value })}
+                  />
+                </div>
+                <div className="edit-product-field">
+                  <label>Description:</label>
+                  <textarea
+                    className="non-resizable-textarea"
+                    value={editingProduct.description}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
+                    rows={6}
+                  />
+                </div>
+                <button onClick={handleSaveProduct} className="admin-save-button">
+                  Save Changes
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

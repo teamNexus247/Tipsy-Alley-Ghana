@@ -35,7 +35,7 @@ const Contact = () => {
           </div>
           <div className="right">
             <form action="">
-              <h2>Contact Us</h2>
+              <h2>CONTACT US</h2>
               <label>Full Name</label>
               <input type="text" className="cu-field" placeholder="Your Name" />
               <label>Email</label>
@@ -43,7 +43,7 @@ const Contact = () => {
               <label>Phone</label>
               <input type="text" className="cu-field" placeholder="Phone" />
               <label>Enter Message</label>
-              <textarea placeholder="Message" className="cu-field"></textarea>
+              <textarea placeholder="Message" className="cu-field" id="non-resizable-textarea" rows={6}></textarea>
               <button type="submit" className="btn">Send</button>
             </form>
           </div>

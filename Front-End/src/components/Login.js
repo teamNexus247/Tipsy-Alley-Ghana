@@ -10,7 +10,7 @@ const Login = ({ setAuth }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === 'tipsy@gmail.com' && password === '1234q') {
+    if (email === '' && password === '') {
       setAuth(true);
       if (rememberMe) {
         localStorage.setItem('isAuth', 'true');

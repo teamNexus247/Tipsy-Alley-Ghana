@@ -124,13 +124,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
   }
   
   #admin-modal-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    width: 300px;
+    width: 600px;
   }
   
   #admin-modal-content label {
@@ -149,6 +150,143 @@
   #admin-products-section {
     display: block;
   }
+  
+  .admin-product-card {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    gap: 20px; 
+  }
+  
+  .admin-product-image-container, .admin-product-actions-container {
+    flex: 0 0 auto; 
+  }
+  
+  .admin-product-image {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .admin-product-details-container, .admin-product-details {
+    flex: 1;
+  }
+  
+  .filter-and-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  #filtering, #search {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #search {
+    flex-grow: 1;
+  }
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #3083ff;
+  margin-left: 30%;
+}
+
+.closing-button {
+  background: none;
+  border: none;
+  color: gray;
+  font-size: 45px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.closing-button:hover{
+  background-color: white;
+}
+
+.edit-product-container {
+  display: flex;
+  gap: 20px; 
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-save-button {
+  margin-top: 20px;
+}
+
+.edit-product-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.update-image-button {
+  padding: 5px 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  background-color: #3083ff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-product-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-product-details {
+  width: 100%;
+}
+
+.non-resizable-textarea {
+  resize: none;
+}
+
+.edit-product-details input,
+.edit-product-details select,
+.edit-product-details textarea {
+  width: 180%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.admin-save-button {
+  background-color: #3083ff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-left: 50%;
+  cursor: pointer;
+}
   
   
 @media (max-width: 1200px) {
