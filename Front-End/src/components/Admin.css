@@ -69,9 +69,9 @@
   }  
 
   #admin-dashboard-section, #admin-bookings-section, #admin-products-section {
-    display: none;
+    display: block;
   }
-  
+
   #admin-dashboard-section h2, #admin-bookings-section h2, #admin-products-section h2 {
     margin-bottom: 20px;
   }
@@ -89,13 +89,6 @@
   #admin-bookings-table th {
     background-color: #f2f2f2;
     text-align: left;
-  }
-  
-  .admin-product-card {
-    display: flex;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
   }
   
   .admin-product-image {
@@ -139,27 +132,16 @@
     margin-bottom: 10px;
   }
   
-  #admin-dashboard-section {
-    display: block;
-  }
-  
-  #admin-bookings-section {
-    display: block;
-  }
-  
-  #admin-products-section {
-    display: block;
-  }
-  
   .admin-product-card {
     display: flex;
     align-items: center;
     border: 1px solid #ddd;
+    border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
     gap: 20px; 
   }
-  
+
   .admin-product-image-container, .admin-product-actions-container {
     flex: 0 0 auto; 
   }
@@ -288,6 +270,25 @@
   cursor: pointer;
 }
   
+.custom-select-container {
+  position: relative;
+}
+
+.custom-select {
+  appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  background-color: white; 
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px; 
+  border-radius: 4px; 
+  width: 100%; 
+  box-sizing: border-box;
+  cursor: pointer; 
+}
+
+
   
 @media (max-width: 1200px) {
     #admin-sidebar {
