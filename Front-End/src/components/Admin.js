@@ -8,6 +8,11 @@ const Admin = () => {
     { id: 1, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.', productImage: defaultProductImage },
     { id: 2, name: 'Strawberry Boba', category: 'Mocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.', productImage: defaultProductImage }
   ]);
+  const [bookings, setBookings] = useState([
+    { id: 1, name: 'Akwasi Boadi', phone: '0556831175', email: 'agyei123@gmail.com', date: '06/07/24', event: 'Birthday', location: 'East Legon', status: 'Pending' },
+    { id: 2, name: 'Afia Manu', phone: '0556831175', email: 'agyei123@gmail.com', date: '06/07/24', event: 'Wedding', location: 'Kumasi', status: 'Pending' },
+    { id: 3, name: 'Afram Del', phone: '', email: '', date: '', event: '', location: '', status: 'Pending' }
+  ]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
@@ -47,6 +52,18 @@ const Admin = () => {
 
   const handleFilterChange = (e) => {
     setFilterCategory(e.target.value);
+  };
+
+  const handleStatusChange = (id, status) => {
+    setBookings(prevBookings =>
+      prevBookings.map(booking =>
+        booking.id === id ? { ...booking, status } : booking
+      )
+    );
+  };
+
+  const handleDelete = id => {
+    setBookings(prevBookings => prevBookings.filter(booking => booking.id !== id));
   };
 
   const filteredProducts = products.filter(product => {
@@ -95,7 +112,7 @@ const Admin = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>Occation Name</th>
+                    <th>Occasion Name</th>
                     <th>Hours</th>
                     <th>Priority</th>
                     <th>Sample Image</th>
@@ -155,32 +172,45 @@ const Admin = () => {
                   <th>Date</th>
                   <th>Event</th>
                   <th>Location</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Akwasi Boadi</td>
-                  <td>0556831175</td>
-                  <td>agyei123@gmail.com</td>
-                  <td>06/07/24</td>
-                  <td>Birthday</td>
-                  <td>East Legon</td>
-                </tr>
-                <tr>
-                  <td>Afia Manu</td>
-                  <td>0556831175</td>
-                  <td>agyei123@gmail.com</td>
-                  <td>06/07/24</td>
-                  <td>Wedding</td>
-                  <td>Kumasi</td>
-                </tr>
-                <tr>
-                  <td>Afram Del</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                {bookings.map(booking => (
+                  <tr key={booking.id}>
+                    <td>{booking.name}</td>
+                    <td>{booking.phone}</td>
+                    <td>{booking.email}</td>
+                    <td>{booking.date}</td>
+                    <td>{booking.event}</td>
+                    <td>{booking.location}</td>
+                    <td>{booking.status}</td>
+                    <td>
+                      <div className="custom-select-container">
+                        <select
+                          className="custom-select"
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === 'Delete') {
+                              handleDelete(booking.id);
+                            } else {
+                              handleStatusChange(booking.id, value);
+                            }
+                          }}
+                          value={booking.status}
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Accepted">Accept</option>
+                          <option value="Denied">Deny</option>
+                          <option value="Delete">Delete</option>
+                        </select>
+                      </div>
+                    </td>
+
+
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -203,12 +233,12 @@ const Admin = () => {
                 <div className="admin-product-details">
                   <h3>{product.name}</h3>
                   <p>Category: {product.category}</p>
-                  <p>Price: ${product.price}</p>
+                  <p>Price: GH¢{product.price}</p>
                   <p>{product.description}</p>
-                  <div className="admin-product-actions">
+                </div>
+                <div className="admin-product-actions">
                     <button onClick={() => handleEditProduct(product)} className="admin-edit-button">Edit</button>
                     <button className="admin-delete-button">Delete</button>
-                  </div>
                 </div>
               </div>
             ))}
