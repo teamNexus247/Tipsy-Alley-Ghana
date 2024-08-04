@@ -41,7 +41,7 @@
         <h2>Add or Edit Product</h2>
         <form id="productForm" enctype="multipart/form-data">
             <label for="productName">Product Name:</label>
-            <input type="text" id="name" name="productName" required>
+            <input type="text" id="name" name="name" required>
 
             <label for="price">Price:</label>
             <input type="number" id="price" name="price" required>
@@ -128,7 +128,7 @@
 
             const formData = new FormData(event.target);
 
-            fetch('http://localhost:4000/api/products', {
+            fetch('http://localhost:4000/api/products/add', {
                 method: 'POST',
                 body: formData
             })
@@ -185,7 +185,7 @@
             fetch(`http://localhost:4000/api/products/${id}`)
                 .then(response => response.json())
                 .then(product => {
-                    document.getElementById('productName').value = product.name;
+                    document.getElementById('name').value = product.name;
                     document.getElementById('price').value = product.price;
                     document.getElementById('category').value = product.category;
                     // Image field is not populated for security reasons, admin should re-upload image if needed

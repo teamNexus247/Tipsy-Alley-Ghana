@@ -4,10 +4,8 @@ const connectDB = require('./src/config/db');
 const cors = require('cors');
 const productRoutes = require('./src/routes/productRoutes');
 const bookingRoutes = require('./src/routes/bookingRoutes');
-const adminRoutes = require('./src/routes/adminRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 const path = require('path');
-const multer = require('multer');
-
 
 dotenv.config();
 
@@ -31,7 +29,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Mount routes
 app.use('/api/products', productRoutes);
 app.use('/api/bookings', bookingRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/auth', authRoutes);
 
 // Simple route for testing
 app.get('/', (req, res) => {

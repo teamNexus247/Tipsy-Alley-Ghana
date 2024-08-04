@@ -1,86 +1,87 @@
 const Product = require('../models/productModel');
+const multer = require('multer');
 const path = require('path');
 
-// Create a new product
-const createProduct = async (req, res) => {
-  try {
-    const { name, price, category } = req.body;
-    const image = req.file ? req.file.path : ''; // Handle file upload
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
 
-    const product = await Product.create({ name, price, category, image });
+const upload = multer({ storage });
+
+exports.uploadProductImage = upload.single('image');
+
+exports.addProduct = async (req, res) => {
+  const { name, price, category } = req.body;
+  const image = req.file ? req.file.path : '';
+
+  try {
+    const product = new Product({ name, price, category, image });
+    await product.save();
     res.status(201).json(product);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-// Get all products or products by category
-const getProducts = async (req, res) => {
+exports.getProducts = async (req, res) => {
   try {
-    const category = req.query.category;
-    const query = category ? { category } : {};
-    const products = await Product.find(query);
-    res.json(products);
+    const products = await Product.find();
+    res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-// Get a product by ID
-const getProductById = async (req, res) => {
+exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      res.status(404).json({ message: 'Product not found' });
-      return;
+      return res.status(404).json({ error: 'Product not found' });
     }
-    res.json(product);
+    res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-// Update a product
-const updateProduct = async (req, res) => {
+exports.updateProduct = async (req, res) => {
+  const { name, price, category } = req.body;
+  const image = req.file ? req.file.path : req.body.image;
+
   try {
-    const { name, price, category } = req.body;
-    const image = req.file ? req.file.path : undefined; // Handle file upload
-
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      { name, price, category, image },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedProduct) {
-      res.status(404).json({ message: 'Product not found' });
-      return;
-    }
-
-    res.json(updatedProduct);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Delete a product
-const deleteProduct = async (req, res) => {
-  try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
-      res.status(404).json({ message: 'Product not found' });
-      return;
+      return res.status(404).json({ error: 'Product not found' });
     }
-    res.json({ message: 'Product deleted successfully' });
+
+    product.name = name || product.name;
+    product.price = price || product.price;
+    product.category = category || product.category;
+    product.image = image || product.image;
+
+    await product.save();
+    res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = {
-  createProduct,
-  getProducts,
-  getProductById,
-  updateProduct,
-  deleteProduct,
+exports.deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    await product.remove();
+    res.status(200).json({ message: 'Product removed' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
