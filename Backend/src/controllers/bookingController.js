@@ -17,7 +17,7 @@ const createBooking = async (req, res) => {
         user: {
           id: "tipsyalleygh@gmail.com",
           email: "tipsyalleygh@gmail.com",
-          number: "+233248425044" 
+          number: "+233244403944" 
         },
         mergeTags: {
           "booking": {

@@ -1,33 +1,101 @@
-const Admin = require('../models/admin');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Admin = require('../models/admin');
+const TokenBlacklist = require('../models/TokenBlacklist');
 
+// Register a new admin
 exports.registerAdmin = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    const admin = new Admin({ username, password });
+    // Check if the admin already exists
+    let admin = await Admin.findOne({ email });
+    if (admin) {
+      return res.status(400).json({ msg: 'Admin already exists' });
+    }
+
+    // Create a new admin
+    admin = new Admin({
+      username,
+      email,
+      password,
+    });
+
+    // Save the admin to the database
     await admin.save();
-    res.status(201).json({ message: 'Admin registered successfully' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+
+    // Generate JWT token
+    const payload = {
+      admin: {
+        id: admin.id,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
   }
 };
 
+// Authenticate admin and get token
 exports.loginAdmin = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const admin = await Admin.findOne({ username });
-    if (!admin || !(await admin.matchPassword(password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    // Check if the admin exists
+    let admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(400).json({ msg: 'Invalid Credentials' });
     }
 
-    const token = jwt.sign({ id: admin._id }, 'a9bcdeed759bc693ba075512a98056983387662d53884e46585338d941a977a1ca0b259ef0baf4c729baa334bf7823fe416faaf230d94fe086327d194ab42d39', {
-      expiresIn: '1d',
-    });
+    // Check if the password matches
+    const isMatch = await admin.matchPassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: 'Invalid Credentials' });
+    }
 
-    res.json({ token });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    // Generate JWT token
+    const payload = {
+      admin: {
+        id: admin.id,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
   }
+};
+
+// Logout admin and blacklist token
+exports.logout = (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+
+  if (!token) {
+    return res.status(400).json({ message: 'No token provided' });
+  }
+
+  // Blacklist the token
+  const blacklistToken = new TokenBlacklist({ token });
+  blacklistToken.save()
+    .then(() => res.status(200).json({ message: 'Logged out successfully' }))
+    .catch(err => res.status(500).json({ message: 'Error logging out', error: err }));
 };

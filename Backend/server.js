@@ -9,13 +9,16 @@ const path = require('path');
 
 dotenv.config();
 
-// Connect to Tipsy AlleyDB
+// Connect to the database
 connectDB();
 
 const app = express();
 
-// Middleware to parse JSON
-app.use(express.json());
+// Middleware to parse JSON with increased size limit
+app.use(express.json({ limit: '50mb' }));
+
+// Middleware to parse URL-encoded data with increased size limit
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Middleware for CORS
 app.use(cors());
