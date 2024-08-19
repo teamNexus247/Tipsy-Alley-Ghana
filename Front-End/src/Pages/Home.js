@@ -40,8 +40,9 @@ const Home = () => {
         <div className="content" id="content">
           <h1 className="title" id="title">Joy in Every <br /> Tipsy Alley.</h1>
           <p className="description" id="description">
-            Lorem ipsum dolor sit amet, consectetur <br />adipiscing elit, sed do eiusmod tempor incididunt<br /> 
-            ut labore et dolore magna aliqua. <br />Ut enim ad minim veniam.
+            Experience the best cold cup of goodness <br/>to quench your thirst and experience joy in every sip.<br /> 
+            Make a pick from our range of beverages carefully <br /> crafted for you, whether cocktail, mocktail or boba.
+
           </p>
           <button id="cta-button" className="cta-button"><a href="./products">Explore</a></button>
         </div>
@@ -53,7 +54,8 @@ const Home = () => {
         <div className="text-container">
           <h3>What is that special thing about us?</h3>
           <h2>Our Bubble Tale</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+          <p>Experience the best cold cup of goodness <br/>to quench your thirst and experience joy in every sip.<br /> 
+            Make a pick from our range of beverages carefully <br /> crafted for you, whether cocktail, mocktail or boba.</p>
           <button className="cta-button">
             <a href="./about">Load More</a>
           </button>
@@ -62,7 +64,9 @@ const Home = () => {
       <div className="section3" id="section3">
         <div className="header">
           <h2>Tipsy of Joy</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+          <p>We offer a wide range of beverages made by experts, just for you.
+            Explore the best selection of alcoholic and non-alcoholic drinks.
+</p>
         </div>
         <div className="grid">
           <div className="grid-item">
@@ -108,14 +112,14 @@ const Home = () => {
       </div>
       <div className="section4" id="section4">
         <div className="header">
-          <h2>Reviews</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+          <h2>What our clients have to say!</h2>
+          <p>We pride ourselves on delivering top-notch service to satisfy every customer for the best experience. <br/>Discover why our clients love Tipsy Alley!</p>
         </div>
         <div className="reviews">
           <div className="review-card">
             <img src={reviewImage} alt="Reviewer" className="review-image" />
             <div className="review-text">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+              <p>I was thrilled with the service from Tipsy Alley. The convenience of having a bar come to us was fantastic and the quality of the drinks was exceptional. I'll definitely be booking them again for future events!</p>
               <p>- Anne Frank -</p>
               <div className="stars">
                 <span>⭐</span>
@@ -129,7 +133,7 @@ const Home = () => {
           <div className="review-card">
             <img src={reviewImage} alt="Reviewer" className="review-image" />
             <div className="review-text">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+              <p>I stopped by the Tipsy Alley shop on UG campus for a quick Boba fix and it did not dissapoint! The drink was refreshing, perfectly balanced and the services was outstanging. The team was super friendly and handled my order with care, making sure everything was just right. I'll definitely be back for more!</p>
               <p>- Anne Frank -</p>
               <div className="stars">
                 <span>⭐</span>

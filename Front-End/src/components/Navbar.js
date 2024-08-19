@@ -55,7 +55,7 @@ const Navbar = () => {
               <li><Link to="/events" className={location.pathname === "/events" ? 'active' : ''} onClick={handleLinkClick}>Events & Gallery</Link></li>
               <li><Link to="/contact" className={location.pathname === "/contact" ? 'active' : ''} onClick={handleLinkClick}>Contact</Link></li>
               <li><Link to="/about" className={location.pathname === "/about" ? 'active' : ''} onClick={handleLinkClick}>About</Link></li>
-              <li><Link to="/admin" className={location.pathname === "/admin" ? 'active' : ''} onClick={handleLinkClick}>Admin Page</Link></li>
+              <li><Link to="/admin" className={location.pathname === "/admin" ? 'active' : ''} onClick={handleLinkClick}>Admin</Link></li>
             </ul>
           </div>
         </div>

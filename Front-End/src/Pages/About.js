@@ -13,8 +13,7 @@ const About = () => {
               <div className="content">
                 <h1 className="title">How Well <br />Do <span className='U-text'>U </span>Know Tipsy</h1>
                 <p className="description">
-                  Lorem ipsum dolor sit amet, consectetur <br />adipiscing elit, sed do eiusmod tempor incididunt<br /> 
-                  ut labore et dolore magna aliqua. <br />Ut enim ad minim veniam.
+                  Welcome to Tipsy Alley, where every drink is an adventure! We blend tradition with innovation to bring you unique cocktails, mocktails, and boba creations in a vibrant, welcoming space. Join us for bold flavors and unforgettable experiences!
                 </p>
                 <button className="cta-button">Know More</button>
               </div>

@@ -1,22 +1,51 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Admin.css';
-import defaultProductImage from '../Images/bo4.png';
+import defaultproductImage from '../Images/bo4.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import logo from '../Images/Logo.png';
 
-const Admin = () => {
+
+const Admin = ({ setAuth }) => {
   const [selectedSection, setSelectedSection] = useState('dashboard');
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Raspberry Cocktail', category: 'Cocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.', productImage: defaultProductImage },
-    { id: 2, name: 'Strawberry Boba', category: 'Mocktail', price: 4.5, description: 'The beautiful range of Apple Naturale that has an exciting mix of natural ingredients. With the goodness of 100% natural ingredients.', productImage: defaultProductImage }
-  ]);
-  const [bookings, setBookings] = useState([
-    { id: 1, name: 'Akwasi Boadi', phone: '0556831175', email: 'agyei123@gmail.com', date: '06/07/24', event: 'Birthday', location: 'East Legon', status: 'Pending' },
-    { id: 2, name: 'Afia Manu', phone: '0556831175', email: 'agyei123@gmail.com', date: '06/07/24', event: 'Wedding', location: 'Kumasi', status: 'Pending' },
-    { id: 3, name: 'Afram Del', phone: '', email: '', date: '', event: '', location: '', status: 'Pending' }
-  ]);
+  const [products, setProducts] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const fileInputRef = useRef(null);
+  const [showAddProductForm, setShowAddProductForm] = useState(false);
+  const [newProduct, setNewProduct] = useState({ name: '', category: '', price: '', image: '' });
+  const [selectedImage, setSelectedImage] = useState(newProduct.productImage);
+
+  
+  const navigate = useNavigate();
+   const token = localStorage.getItem('token');
+  
+
+  useEffect(() => {
+  // Fetch products from the database including image data
+  fetch('https://back-xfzrysouwq-uc.a.run.app/api/products')
+    .then(response => response.json())
+    .then(data => {
+      const productsWithImages = data.map(product => ({
+        ...product,
+        image: `https://back-xfzrysouwq-uc.a.run.app/uploads/${product.image}` 
+      }));
+      setProducts(productsWithImages);
+    })
+    .catch(error => console.error('Error fetching products:', error));
+
+  // Fetch bookings from the database
+  fetch('https://back-xfzrysouwq-uc.a.run.app/api/bookings')
+    .then(response => response.json())
+    .then(data => setBookings(data))
+    .catch(error => console.error('Error fetching bookings:', error));
+}, []);
+
 
   const handleCloseModal = () => {
     setEditingProduct(null);
@@ -26,19 +55,87 @@ const Admin = () => {
     setEditingProduct(product);
   };
 
-  const handleSaveProduct = () => {
-    setProducts(products.map(product => product.id === editingProduct.id ? editingProduct : product));
-    setEditingProduct(null);
-  };
+const handleSaveProduct = async () => {
+  try {
+    const formData = new FormData();
 
-  const handleImageUpload = (event) => {
+    // Append all fields from editingProduct to FormData
+    for (const key in editingProduct) {
+      if (Object.prototype.hasOwnProperty.call(editingProduct, key)) {
+        formData.append(key, editingProduct[key]);
+      }
+    }
+
+    // Send the update request
+    const response = await fetch(`https://back-xfzrysouwq-uc.a.run.app/api/products/update/${editingProduct._id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      const updatedProduct = await response.json();
+      setProducts((prevProducts) =>
+        prevProducts.map((product) => (product._id === editingProduct._id ? updatedProduct : product))
+      );
+      setEditingProduct(null);
+      Swal.fire('Updated!', 'The product has been updated.', 'success');
+    } else {
+      const errorData = await response.json();
+      Swal.fire('Error!', errorData.message || 'Failed to update the product.', 'error');
+    }
+  } catch (error) {
+    console.error('Error updating product:', error);
+    Swal.fire('Error!', 'An unexpected error occurred.', 'error');
+  }
+};
+
+
+ const handleAddProduct = () => {
+  const formData = new FormData();
+  formData.append('name', newProduct.name);
+  formData.append('category', newProduct.category);
+  formData.append('price', newProduct.price);
+  formData.append('description', newProduct.description); // Include description
+  formData.append('image', newProduct.image); // Adding the image file
+
+  fetch('https://back-xfzrysouwq-uc.a.run.app/api/products/add', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`  // Include the token for authentication
+      
+    },
+    body: formData,  // Send the formData as the body of the request
+  })
+    .then(response => response.json())
+    .then(data => {
+      setProducts([...products, data]);  // Update the products list with the new product
+      setShowAddProductForm(false);  // Close the add product form
+    })
+    .catch(error => console.error('Error adding product:', error));
+};
+
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    if (editingProduct) {
+      setEditingProduct({ ...editingProduct, image: file });  // Update the image for the product being edited
+    } else {
+      setNewProduct({ ...newProduct, image: file });  // Update the image for the new product
+    }
+  }
+};
+
+const handleImageNewUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setEditingProduct({ ...editingProduct, productImage: reader.result });
+        setSelectedImage(reader.result); // Update the image preview
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Convert the file to a data URL for preview
     }
   };
 
@@ -54,17 +151,104 @@ const Admin = () => {
     setFilterCategory(e.target.value);
   };
 
-  const handleStatusChange = (id, status) => {
-    setBookings(prevBookings =>
-      prevBookings.map(booking =>
-        booking.id === id ? { ...booking, status } : booking
-      )
-    );
+const handleDeleteBooking = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this booking!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await fetch(`https://back-xfzrysouwq-uc.a.run.app/api/bookings/${id}`, { method: 'DELETE' });
+        setBookings(bookings.filter(booking => booking._id !== id));
+        Swal.fire('Deleted!', 'The booking has been deleted.', 'success');
+      } catch (error) {
+        console.error('Error deleting booking:', error);
+      }
+    }
   };
 
-  const handleDelete = id => {
-    setBookings(prevBookings => prevBookings.filter(booking => booking.id !== id));
-  };
+const handleDeleteProduct = async (id) => {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'You will not be able to recover this product!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  });
+
+  if (result.isConfirmed) {
+    try {
+      const response = await fetch(`https://back-xfzrysouwq-uc.a.run.app/api/products/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}` // Include the token in the request
+          }
+      });
+
+      if (response.ok) {
+        setProducts((prevProducts) => prevProducts.filter(product => product._id !== id));
+        Swal.fire('Deleted!', 'The product has been deleted.', 'success');
+      } else {
+        const errorData = await response.json();
+        Swal.fire('Error!', errorData.message || 'Failed to delete the product.', 'error');
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      Swal.fire('Error!', 'An unexpected error occurred.', 'error');
+    }
+  }
+};
+
+  
+
+const handleLogout = async () => {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'You will be logged out!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, logout!'
+  });
+
+  if (result.isConfirmed) {
+    try {
+      const token = localStorage.getItem('token');
+
+      // Send the logout request to the backend
+      await fetch('https://back-xfzrysouwq-uc.a.run.app/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ token }) // Send the token to the backend
+      });
+
+      // Remove the token from localStorage
+      localStorage.removeItem('token');
+       setAuth(false);
+      // Redirect to login page or show success message
+      window.location.href = '/login';
+      Swal.fire('Logged out!', 'You have been logged out successfully.', 'success');
+    } catch (error) {
+      console.error('Logout error:', error);
+      Swal.fire('Error!', 'An error occurred while logging out.', 'error');
+    }
+  }
+};
+
+
+
 
   const filteredProducts = products.filter(product => {
     return (
@@ -76,10 +260,19 @@ const Admin = () => {
   return (
     <div id="admin-main-container">
       <div id="admin-sidebar">
-        <div id="admin-sidebar-logo">Tipsy Alley</div>
+        <div id="logo" >
+          <img src={logo} alt="Logo" className="logo" />
+        </div>
         <div className="admin-sidebar-item" onClick={() => setSelectedSection('dashboard')}>Dashboard</div>
         <div className="admin-sidebar-item" onClick={() => setSelectedSection('bookings')}>Bookings</div>
         <div className="admin-sidebar-item" onClick={() => setSelectedSection('previewProducts')}>Preview Products</div>
+        <FontAwesomeIcon
+            icon={faSignOutAlt}
+            className="logout-icon"
+            style={{ cursor: 'pointer', fontSize: '20px' }}
+            onClick={handleLogout}
+          />
+
       </div>
       <div id="admin-content">
         {selectedSection === 'dashboard' && (
@@ -124,35 +317,35 @@ const Admin = () => {
                     <td>Birthday Celebration</td>
                     <td>6</td>
                     <td>Medium</td>
-                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td><img src={defaultproductImage} alt="team" className="team-avatar" /></td>
                     <td>89%</td>
                   </tr>
                   <tr>
                     <td>Birthday Celebration</td>
                     <td>6</td>
                     <td>Medium</td>
-                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td><img src={defaultproductImage} alt="team" className="team-avatar" /></td>
                     <td>89%</td>
                   </tr>
                   <tr>
                     <td>Birthday Celebration</td>
                     <td>6</td>
                     <td>Medium</td>
-                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td><img src={defaultproductImage} alt="team" className="team-avatar" /></td>
                     <td>89%</td>
                   </tr>
                   <tr>
                     <td>Birthday Celebration</td>
                     <td>6</td>
                     <td>Medium</td>
-                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td><img src={defaultproductImage} alt="team" className="team-avatar" /></td>
                     <td>89%</td>
                   </tr>
                   <tr>
                     <td>Birthday Celebration</td>
                     <td>6</td>
                     <td>Medium</td>
-                    <td><img src={defaultProductImage} alt="team" className="team-avatar" /></td>
+                    <td><img src={defaultproductImage} alt="team" className="team-avatar" /></td>
                     <td>89%</td>
                   </tr>
                 </tbody>
@@ -170,45 +363,47 @@ const Admin = () => {
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Date</th>
-                  <th>Event</th>
+                  <th>Time</th>
                   <th>Location</th>
+                  <th>Details</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 {bookings.map(booking => (
                   <tr key={booking.id}>
-                    <td>{booking.name}</td>
-                    <td>{booking.phone}</td>
+                    <td>{booking.customerName}</td>
+                    <td>{booking.contact1}</td>
                     <td>{booking.email}</td>
-                    <td>{booking.date}</td>
-                    <td>{booking.event}</td>
-                    <td>{booking.location}</td>
-                    <td>{booking.status}</td>
+                    <td>{new Date(booking.eventDate).toLocaleDateString()}</td>
+                    <td>{booking.eventTime}</td>
+                    <td>{booking.eventLocation}</td>
+                    <td>{booking.eventDetails}</td>
                     <td>
                       <div className="custom-select-container">
                         <select
                           className="custom-select"
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (value === 'Delete') {
-                              handleDelete(booking.id);
-                            } else {
-                              handleStatusChange(booking.id, value);
-                            }
-                          }}
-                          value={booking.status}
                         >
                           <option value="Pending">Pending</option>
                           <option value="Accepted">Accept</option>
                           <option value="Denied">Deny</option>
-                          <option value="Delete">Delete</option>
+                          
                         </select>
                       </div>
                     </td>
+                    <td>
+                      
+                      <td>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => handleDeleteBooking(booking._id)}
+                        className="admin-delete-button"
+                        style={{ cursor: 'pointer', fontSize: '20px', marginLeft: '10px' }}
+                      />
 
-
+                    </td>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -225,27 +420,40 @@ const Admin = () => {
                 <option value="Mocktail">Mocktail</option>
                 <option value="Boba">Boba</option>
               </select>
-              <input type='search' name='search' id='search' placeholder="Search" value={searchTerm} onChange={handleSearchChange}></input>
+              <input type='search' name='search' id='search' placeholder="Search" value={searchTerm} onChange={handleSearchChange} />
+              <FaPlus className="plus-icon" onClick={() => setShowAddProductForm(true)} />
             </div>
             {filteredProducts.map(product => (
               <div className="admin-product-card" key={product.id}>
-                <img src={product.productImage} alt={product.name} className="admin-product-image" />
+                <img src={product.image} alt={product.image} className="admin-product-image" />
                 <div className="admin-product-details">
                   <h3>{product.name}</h3>
                   <p>Category: {product.category}</p>
                   <p>Price: GH¢{product.price}</p>
-                  <p>{product.description}</p>
+                  
                 </div>
                 <div className="admin-product-actions">
-                    <button onClick={() => handleEditProduct(product)} className="admin-edit-button">Edit</button>
-                    <button className="admin-delete-button">Delete</button>
+                    <FontAwesomeIcon
+                        icon={faEdit}
+                        onClick={() => handleEditProduct(product)}
+                        className="admin-edit-button"
+                        style={{ cursor: 'pointer', fontSize: '20px' }}
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => handleDeleteProduct(product._id, 'products')}
+                        className="admin-delete-button"
+                        style={{ cursor: 'pointer', fontSize: '20px', marginLeft: '10px' }}
+                      />
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-      {editingProduct && (
+    
+
+        {editingProduct && (
         <div id="admin-modal">
           <div id="admin-modal-content">
             <div className="modal-header">
@@ -258,6 +466,7 @@ const Admin = () => {
                 <input
                   type="file"
                   accept="image/*"
+                  id="price"
                   onChange={handleImageUpload}
                   ref={fileInputRef}
                   style={{ display: 'none' }}
@@ -269,6 +478,7 @@ const Admin = () => {
                   <label>Product name:</label>
                   <input
                     type="text"
+                    id="name"
                     value={editingProduct.name}
                     onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
                   />
@@ -277,6 +487,7 @@ const Admin = () => {
                   <label>Category:</label>
                   <select
                     value={editingProduct.category}
+                    id="price"
                     onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
                   >
                     <option value="Cocktail">Cocktail</option>
@@ -288,24 +499,83 @@ const Admin = () => {
                   <label>Price:</label>
                   <input
                     type="number"
+                    id="price"
                     value={editingProduct.price}
                     onChange={(e) => setEditingProduct({ ...editingProduct, price: e.target.value })}
                   />
                 </div>
-                <div className="edit-product-field">
-                  <label>Description:</label>
-                  <textarea
-                    className="non-resizable-textarea"
-                    value={editingProduct.description}
-                    onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
-                    rows={6}
-                  />
-                </div>
+                 
                 <button onClick={handleSaveProduct} className="admin-save-button">
                   Save Changes
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+      {/* )} */}
+      {showAddProductForm && (
+        <div id="admin-modal">
+          <div id="admin-modal-content">
+            <div className="modal-header">
+              <h2>Add Product</h2>
+              <button className="closing-button" onClick={() => setShowAddProductForm(false)}>×</button>
+            </div>
+          <div className="edit-product-container">
+            <div className="image-container">
+                <img
+                  src={selectedImage}
+                  alt={newProduct.name}
+                  className="edit-product-image"
+                  style={{ cursor: 'pointer' }}
+                />
+                <input
+                type="file"
+                id="newimage"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleImageUpload}
+              />
+              <button type="button" onClick={handleUpdateImageClick}>Upload Image</button>
+            </div>
+            <div className="edit-product-details">
+              <div className="edit-product-field">
+                <label htmlFor="newname">Product Name</label>
+                <input
+                  type="text"
+                  id="newname"
+                  value={newProduct.name}
+                  onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                />
+              </div>
+              <div className="edit-product-field">
+                <label htmlFor="newprice">Price</label>
+                <input
+                  type="number"
+                  id="newprice"
+                  value={newProduct.price}
+                  onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                />
+              </div>
+              <div className="edit-product-field">
+                <label htmlFor="newcategory">Category</label>
+                <select
+                    type="text"
+                    id="newcategory"
+                    value={newProduct.category}
+                    onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                  >
+                    <option value="Cocktail">Cocktail</option>
+                    <option value="Mocktail">Mocktail</option>
+                    <option value="Boba">Boba</option>
+                  </select>
+              </div>
+              
+              
+              <button type="button" onClick={handleAddProduct} className="admin-save-button" >Add Product</button>
+            </div>
+          </div>
+          
           </div>
         </div>
       )}

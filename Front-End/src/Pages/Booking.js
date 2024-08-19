@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import '../Styles/Booking.css';
+
 const Booking = () => {
     const formRef = useRef(null);
 
@@ -10,39 +12,60 @@ const Booking = () => {
     };
 
     useEffect(() => {
-                    const handleSubmit = (event) => {
-                        event.preventDefault();
+        const handleSubmit = async (event) => {
+            event.preventDefault();
 
-                        const formData = new FormData(event.target);
-                        const data = {};
-                        formData.forEach((value, key) => {
-                            data[key] = value;
-                        });
+            const formData = new FormData(event.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
 
-                        fetch('https://backend-fegmid3olq-ww.a.run.app/api/bookings', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                alert('Booking successful!');
-                                event.target.reset();
-                            })
-                            .catch(error => {
-                                console.error('Error booking event:', error);
-                                alert('Booking failed. Please try again.');
-                            });
-                    };
+           
+            data.eventDate = data.eventDate;
+            data.eventTime = data.eventTime;
 
-                    const form = document.getElementById('bookingForm');
-                    form.addEventListener('submit', handleSubmit);
+            try {
+                const response = await fetch('https://back-xfzrysouwq-uc.a.run.app/api/bookings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
 
-                    return () => {
-                        form.removeEventListener('submit', handleSubmit);
-                    };
+                if (response.ok) {
+                    const responseData = await response.json();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Booking successful!',
+                        text: 'Your booking has been confirmed.',
+                    });
+                    event.target.reset();
+                } else {
+                    const errorData = await response.json();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Booking failed',
+                        text: `Booking failed: ${errorData.message}`,
+                    });
+                }
+            } catch (error) {
+                console.error('Error booking event:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Booking failed',
+                    text: 'Booking failed. Please try again.',
+                });
+            }
+        };
+
+        const form = document.getElementById('bookingForm');
+        form.addEventListener('submit', handleSubmit);
+
+        return () => {
+            form.removeEventListener('submit', handleSubmit);
+        };
     }, []);
 
     return (
@@ -51,8 +74,11 @@ const Booking = () => {
                 <div className="content">
                     <h1 className="title">Book Us For<br /> Your Events.</h1>
                     <p className="description">
-                    Lorem ipsum dolor sit amet, consectetur <br />adipiscing elit, sed do eiusmod tempor incididunt<br /> 
-                    ut labore et dolore magna aliqua. <br />Ut enim ad minim veniam.
+                        Turn your event into a vibrant celebration with our handcrafted <br />
+                        boba, cocktails, and mocktails. Let us
+                        bring the flavour and flair to your <br />  special
+                        day, making every moment <br /> unforgettable.
+                        Book us now and sip in style!". 
                     </p>
                     <button className="cta-button" onClick={scrollToForm}>Book Now</button>
                 </div>
@@ -62,36 +88,36 @@ const Booking = () => {
                 <form className="booking-form" id="bookingForm">
                     <div>
                         <label>Your Name</label>
-                        <input type="text" id= "customerName" name= "customerName" placeholder='Enter full name'/>
+                        <input type="text" id="customerName" name="customerName" placeholder='Enter full name' required />
                     </div>
                     <div>
                         <label>Your Phone Number</label>
-                        <input type="text" id= "customercontact"  placeholder='Input phone number'/>
+                        <input type="text" id="contact1" name="contact1" placeholder='Input phone number' required />
                     </div>
                     <div>
-                    <div>
                         <label>Email Address (Optional)</label>
-                        <input type="email"  id= "email" name= "email" placeholder='Enter Email'/>
+                        <input type="email" id="email" name="email" placeholder='Enter Email' />
                     </div>
                     <div>
                         <label>Event Location</label>
-                        <input type='text' id= "eventLocation" name= "eventLocation" placeholder='Enter specific Location'></input>
+                        <input type="text" id="eventLocation" name="eventLocation" placeholder='Enter specific Location' required />
                     </div>
-                        <label>Event Date (dd/mm/yy)</label>
-                        <input type="date" id= "eventDate" name= "eventDate" />
+                    <div>
+                        <label>Event Date</label>
+                        <input type="date" id="eventDate" name="eventDate" required />
                     </div>
                     <div>
                         <label>Event Time</label>
-                        <input type="time"  id= "eventTime" name= "eventTime" />
+                        <input type="time" id="eventTime" name="eventTime" required />
                     </div>
                     <div>
                         <label>Event Details</label>
-                        <textarea rows="4" id= "eventDetails" name= "eventDetails" placeholder='Add more information about the event'></textarea>
+                        <textarea rows="4" id="eventDetails" name="eventDetails" placeholder='Add more information about the event'></textarea>
                     </div>
                     <button type="submit">Book Us</button>
                 </form>
             </div>
-            </div>
+        </div>
     );
 }
 

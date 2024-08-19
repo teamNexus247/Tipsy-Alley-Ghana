@@ -12,7 +12,7 @@ import Admin from './components/Admin';
 import Login from './components/Login';
 import Boba from './Pages/Boba';
 import Mocktails from './Pages/Moctails';
-import Cocktails from './Pages/Cocktails'; 
+import Cocktails from './Pages/Cocktails';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -34,12 +34,18 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/boba" element={<Boba />} /> 
-        <Route path="/mocktails" element={<Mocktails />} /> 
+        <Route path="/boba" element={<Boba />} />
+        <Route path="/mocktails" element={<Mocktails />} />
         <Route path="/cocktails" element={<Cocktails />} />
         <Route path="/booking" element={<Booking />} />
-        <Route path="/admin" element={isAuth ? <Admin setAuth={setIsAuth} /> : <Navigate to="/login" />} />
-        <Route path="/login" element={<Login setAuth={setIsAuth} />} />
+        <Route
+          path="/admin"
+          element={isAuth ? <Admin setAuth={setIsAuth} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/login"
+          element={<Login setAuth={setIsAuth} />}
+        />
       </Routes>
       <Footer />
     </BrowserRouter>

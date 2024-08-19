@@ -13,9 +13,10 @@ const Contact = () => {
       <div className="homepage" id='contact'>
       <div className="content">
         <h1 className="title">Get In Touch <br /> with Us.</h1>
-        <p className="description">
-          Lorem ipsum dolor sit amet, consectetur <br />adipiscing elit, sed do eiusmod tempor incididunt<br /> 
-          ut labore et dolore magna aliqua. <br />Ut enim ad minim veniam.
+        <p className="description">  Have questions, feedback, or just want to say hello? <br/>We'd love to hear from you! <br />
+  Whether you're curious about our events,<br/> have a suggestion, or want to learn more about our boba drinks,<br/> we're here to help.
+  Reach out to us, and we'll <br/> get back to you as soon as possible. Let's connect and make your boba<br/> experience even sweeter!
+
         </p>
         <button className="cta-button" onClick={handleScrollToContact} >Reach Us</button>
       </div>
