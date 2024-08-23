@@ -31,7 +31,7 @@ function Mocktails() {
   };
 
   useEffect(() => {
-    fetch('https://back-xfzrysouwq-uc.a.run.app/api/products')
+    fetch('https://backe-xfzrysouwq-uc.a.run.app/api/products')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -40,7 +40,7 @@ function Mocktails() {
       })
       .then(data => {
         // Filter and map the products
-        const baseURL = 'https://back-xfzrysouwq-uc.a.run.app/uploads/';
+        const baseURL = 'https://backe-xfzrysouwq-uc.a.run.app/uploads/';
         const productsArray = data
           .filter(product => product.category === 'Mocktail')
           .map(product => ({

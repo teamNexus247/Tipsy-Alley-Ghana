@@ -26,7 +26,7 @@ const Booking = () => {
             data.eventTime = data.eventTime;
 
             try {
-                const response = await fetch('https://back-xfzrysouwq-uc.a.run.app/api/bookings', {
+                const response = await fetch('https://backe-xfzrysouwq-uc.a.run.app/api/bookings', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

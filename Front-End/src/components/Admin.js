@@ -28,19 +28,19 @@ const Admin = ({ setAuth }) => {
 
   useEffect(() => {
   // Fetch products from the database including image data
-  fetch('https://back-xfzrysouwq-uc.a.run.app/api/products')
+  fetch('https://backe-xfzrysouwq-uc.a.run.app/api/products')
     .then(response => response.json())
     .then(data => {
       const productsWithImages = data.map(product => ({
         ...product,
-        image: `https://back-xfzrysouwq-uc.a.run.app/uploads/${product.image}` 
+        image: `https://backe-xfzrysouwq-uc.a.run.app/uploads/${product.image}` 
       }));
       setProducts(productsWithImages);
     })
     .catch(error => console.error('Error fetching products:', error));
 
   // Fetch bookings from the database
-  fetch('https://back-xfzrysouwq-uc.a.run.app/api/bookings')
+  fetch('https://backe-xfzrysouwq-uc.a.run.app/api/bookings')
     .then(response => response.json())
     .then(data => setBookings(data))
     .catch(error => console.error('Error fetching bookings:', error));
@@ -67,7 +67,7 @@ const handleSaveProduct = async () => {
     }
 
     // Send the update request
-    const response = await fetch(`https://back-xfzrysouwq-uc.a.run.app/api/products/update/${editingProduct._id}`, {
+    const response = await fetch(`https://backe-xfzrysouwq-uc.a.run.app/api/products/update/${editingProduct._id}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -101,7 +101,7 @@ const handleSaveProduct = async () => {
   formData.append('description', newProduct.description); // Include description
   formData.append('image', newProduct.image); // Adding the image file
 
-  fetch('https://back-xfzrysouwq-uc.a.run.app/api/products/add', {
+  fetch('https://backe-xfzrysouwq-uc.a.run.app/api/products/add', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`  // Include the token for authentication
@@ -164,7 +164,7 @@ const handleDeleteBooking = async (id) => {
 
     if (result.isConfirmed) {
       try {
-        await fetch(`https://back-xfzrysouwq-uc.a.run.app/api/bookings/${id}`, { method: 'DELETE' });
+        await fetch(`https://backe-xfzrysouwq-uc.a.run.app/api/bookings/${id}`, { method: 'DELETE' });
         setBookings(bookings.filter(booking => booking._id !== id));
         Swal.fire('Deleted!', 'The booking has been deleted.', 'success');
       } catch (error) {
@@ -186,7 +186,7 @@ const handleDeleteProduct = async (id) => {
 
   if (result.isConfirmed) {
     try {
-      const response = await fetch(`https://back-xfzrysouwq-uc.a.run.app/api/products/delete/${id}`, {
+      const response = await fetch(`https://backe-xfzrysouwq-uc.a.run.app/api/products/delete/${id}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}` // Include the token in the request
@@ -225,7 +225,7 @@ const handleLogout = async () => {
       const token = localStorage.getItem('token');
 
       // Send the logout request to the backend
-      await fetch('https://back-xfzrysouwq-uc.a.run.app/api/auth/logout', {
+      await fetch('https://backe-xfzrysouwq-uc.a.run.app/api/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

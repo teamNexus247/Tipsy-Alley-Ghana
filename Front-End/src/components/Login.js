@@ -14,8 +14,8 @@ const Login = ({ setAuth }) => {
     e.preventDefault();
 
     const url = isLogin
-      ? 'https://back-xfzrysouwq-uc.a.run.app/api/auth/login'
-      : 'https://back-xfzrysouwq-uc.a.run.app/api/auth/register';
+      ? 'https://backe-xfzrysouwq-uc.a.run.app/api/auth/login'
+      : 'https://backe-xfzrysouwq-uc.a.run.app/api/auth/register';
 
     const payload = isLogin
       ? { username, password }
